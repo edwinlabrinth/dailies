@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pro/models/habit.dart';
+import 'package:dailies/models/habit.dart';
 
 void main() {
   final today = DateTime(2026, 10, 19);

@@ -8,14 +8,14 @@ void main() {
   runApp(const ProApp());
 }
 
-/// The PRO habit tracker app.
+/// The Dailies habit tracker app.
 class ProApp extends StatelessWidget {
   const ProApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'PRO — Level Up Daily',
+      title: 'Dailies — Level Up Daily',
       debugShowCheckedModeBanner: false,
       theme: buildTheme(),
       home: const HomeScreen(),

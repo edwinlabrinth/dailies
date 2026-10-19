@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pro/models/habit.dart';
-import 'package:pro/models/level.dart';
+import 'package:dailies/models/habit.dart';
+import 'package:dailies/models/level.dart';
 
 void main() {
   group('xpToEnterLevel', () {

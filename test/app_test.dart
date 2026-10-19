@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pro/main.dart';
-import 'package:pro/widgets/habit_tile.dart';
+import 'package:dailies/main.dart';
+import 'package:dailies/widgets/habit_tile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Drives the "new habit" dialog end to end.
@@ -96,7 +96,7 @@ void main() {
 
   testWidgets('loads previously saved habits on boot', (tester) async {
     SharedPreferences.setMockInitialValues({
-      'pro.habits.v1': jsonEncode([
+      'dailies.habits.v1': jsonEncode([
         {
           'id': 'seeded',
           'name': 'Drink water',

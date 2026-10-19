@@ -107,8 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Text(
-              'PRO',
-              style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: 4),
+              'DAILIES',
+              style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: 3),
             ),
             const SizedBox(width: 10),
             Text(

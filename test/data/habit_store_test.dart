@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pro/data/habit_store.dart';
-import 'package:pro/models/habit.dart';
+import 'package:dailies/data/habit_store.dart';
+import 'package:dailies/models/habit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -42,7 +42,7 @@ void main() {
 
   test('load recovers from corrupt payload', () async {
     SharedPreferences.setMockInitialValues({
-      'pro.habits.v1': '{not valid json[',
+      'dailies.habits.v1': '{not valid json[',
     });
     expect(await HabitStore().load(), isEmpty);
   });

@@ -7,7 +7,7 @@ import '../models/habit.dart';
 /// Persists habits locally with `shared_preferences` so progress survives
 /// restarts — fully offline, no accounts, no servers.
 class HabitStore {
-  static const String _key = 'pro.habits.v1';
+  static const String _key = 'dailies.habits.v1';
 
   Future<List<Habit>> load() async {
     final prefs = await SharedPreferences.getInstance();
