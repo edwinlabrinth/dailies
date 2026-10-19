@@ -9,8 +9,10 @@ Add a daily · check it off · earn XP · keep the streak alive
 [![CI](https://github.com/edwinlabrinth/dailies/actions/workflows/ci.yml/badge.svg)](https://github.com/edwinlabrinth/dailies/actions/workflows/ci.yml)
 [![Flutter](https://img.shields.io/badge/Flutter-3.38-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
 [![Platforms](https://img.shields.io/badge/platforms-web%20%7C%20windows-6E56CF.svg)](#-getting-started)
-[![Tests](https://img.shields.io/badge/tests-29%20passing-brightgreen.svg)](#-testing)
+[![Tests](https://img.shields.io/badge/tests-34%20passing-brightgreen.svg)](#-testing)
 [![License: MIT](https://img.shields.io/badge/License-MIT-3DA639.svg)](LICENSE)
+
+**[▶️ Try the live demo](https://edwinlabrinth.github.io/dailies/?demo)** — no install, no sign-up
 
 </div>
 
@@ -33,11 +35,24 @@ discipline, and your save file lives on your device.
 | ⚡ **XP for every check-off** | 10 XP per completion, across all habits |
 | 📈 **A real level curve** | Level 2 costs 100 XP and each step grows by 50 |
 | 🔥 **Midnight-grace streaks** | Your streak survives until the day actually ends |
+| 🗓️ **Seven-day week strip** | The past week at a glance, with today ringed |
+| ↩️ **Undo a mistake** | Deleted a habit? The snackbar offers to put it back |
+| 🎉 **Level-up moments** | Crossing a threshold pops a little celebration |
 | 💾 **100% offline** | Progress is stored locally with `shared_preferences` |
 | 🎨 **Material 3 dark UI** | Seeded palette, animated check-off, momentum stats |
 | 🥇 **Today's momentum** | See `done/total` for today and your best active streak |
-| 🧪 **Fully tested** | 29 unit + widget tests, plus CI on every push |
+| 🧪 **Fully tested** | 34 unit + widget tests, plus CI on every push |
 | 🌐 **Web + Windows** | Same codebase, one `flutter run` away |
+
+## 📸 A look at it
+
+<div align="center">
+
+![Dailies home screen running in demo mode](docs/screenshot-demo.png)
+
+<sub>Demo mode (`?demo`): five habits, a 5-day streak and 110 XP — planted mid-level 2.</sub>
+
+</div>
 
 ## 🎮 How the game works
 
@@ -45,7 +60,7 @@ discipline, and your save file lives on your device.
 |---|---|
 | Tap a habit | Marks it done today — **+10 XP** |
 | Tap it again | Takes the XP back (typos happen) |
-| Long-press a habit | Deletes it, after a confirmation |
+| Long-press a habit | Deletes it — the snackbar offers **Undo** |
 | New habit | Pick a name and an icon; the color is rolled for you |
 
 | Level | XP needed (cumulative) |
@@ -120,16 +135,16 @@ test/
 
 ```bash
 flutter analyze   # zero warnings
-flutter test      # 29 tests
+flutter test      # 34 tests
 ```
 
 | Suite | Covers |
 |---|---|
-| `test/models/habit_test.dart` | date keys, streak reset/grace/gaps, JSON round-trip |
+| `test/models/habit_test.dart` | date keys, streak reset/grace/gaps, week strip, JSON round-trip |
 | `test/models/level_test.dart` | every level boundary, progress math, XP totals |
 | `test/data/habit_store_test.dart` | save/load round-trip, corrupt payload recovery |
 | `test/data/demo_habits_test.dart` | demo dataset stays showcase-ready (110 XP, no future days) |
-| `test/app_test.dart` | add/complete/delete habits, XP updates, restart persistence, demo mode |
+| `test/app_test.dart` | add/complete/delete/undo habits, XP updates, level-ups, restart persistence, demo mode, week strip |
 
 CI runs `flutter analyze`, `flutter test` and a web release build on every push
 — see [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
@@ -149,7 +164,7 @@ CI runs `flutter analyze`, `flutter test` and a web release build on every push
 
 ## 🗺️ Roadmap
 
-- [ ] Weekly heatmap per habit
+- [ ] Monthly calendar view per habit
 - [ ] Local reminders ("your dailies are waiting")
 - [ ] Weekly goals — e.g. "3× per week" instead of every day
 - [ ] Light theme and a theme picker
