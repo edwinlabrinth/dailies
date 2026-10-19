@@ -183,6 +183,9 @@ flutter analyze && flutter test
 Keep the analyzer at zero warnings, add a test for new logic, and match the
 surrounding style. Small, focused commits are appreciated.
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, the project layout, and the
+two house rules (calendar date keys and icon indices).
+
 ## 📄 License
 
 [MIT](LICENSE) © 2026 Edwin Labrinth
