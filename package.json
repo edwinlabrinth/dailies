@@ -1,0 +1,15 @@
+{
+  "name": "dailies-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Serverless API and Postgres schema for Dailies: cloud sync, the guild hall and the weekly world boss.",
+  "scripts": {
+    "db": "node --env-file=.env scripts/db.mjs",
+    "smoke": "node --env-file=.env scripts/smoke.mjs",
+    "dev": "netlify dev"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.2.0"
+  }
+}

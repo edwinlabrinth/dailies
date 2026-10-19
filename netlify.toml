@@ -1,0 +1,12 @@
+[build]
+  publish = "build/web"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  node_bundler = "esbuild"
+
+# The Flutter web bundle is built on the developer's machine with
+# `flutter build web --release`; Netlify only ships the result and the API.
