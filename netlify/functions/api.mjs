@@ -16,13 +16,13 @@ import { neon } from '@neondatabase/serverless';
 const XP_PER_COMPLETION = 10;
 const BOSS_HP_PER_PLAYER = 700; // ~70 completions per active player per week
 const BOSS_NAMES = [
-  'The Procrastination Hydra',
-  'The Snooze Golem',
-  'The Doomscroll Kraken',
-  'The Inbox Wyrm',
-  'The Deadline Djinn',
-  'The Chaos Mimic',
-  'The Excuse Wraith',
+  { name: 'The Procrastination Hydra', emoji: '🐉' },
+  { name: 'The Snooze Golem', emoji: '🗿' },
+  { name: 'The Doomscroll Kraken', emoji: '🐙' },
+  { name: 'The Inbox Wyrm', emoji: '🐛' },
+  { name: 'The Deadline Djinn', emoji: '🧞' },
+  { name: 'The Chaos Mimic', emoji: '🎭' },
+  { name: 'The Excuse Wraith', emoji: '👻' },
 ];
 
 const CORS = {
@@ -326,12 +326,13 @@ async function loadWorld() {
   const activePlayers = Math.max(1, week.players);
   const hpMax = BOSS_HP_PER_PLAYER * activePlayers;
   const damage = week.completions * XP_PER_COMPLETION;
-  const bossName = BOSS_NAMES[isoWeek(new Date()) % BOSS_NAMES.length];
+  const boss = BOSS_NAMES[isoWeek(new Date()) % BOSS_NAMES.length];
 
   return {
     weekStart,
     boss: {
-      name: bossName,
+      name: boss.name,
+      emoji: boss.emoji,
       hpMax,
       damage,
       remaining: Math.max(0, hpMax - damage),

@@ -153,6 +153,7 @@ try {
     assert.ok(boss.hpMax >= 700);
     assert.ok(boss.percent >= 0 && boss.percent <= 100);
     assert.ok(boss.name.length > 0);
+    assert.ok(boss.emoji.length > 0);
     assert.ok(guild.streakDays >= 1);
   });
 } finally {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'data/guild_controller.dart';
 import 'screens/home_screen.dart';
 import 'theme.dart';
 
@@ -15,11 +16,14 @@ void main() {
 
 /// The Dailies habit tracker app.
 class DailiesApp extends StatelessWidget {
-  const DailiesApp({super.key, this.demoMode = false});
+  const DailiesApp({super.key, this.demoMode = false, this.guild});
 
   /// When true the home screen is seeded with sample habits (see
   /// `data/demo_habits.dart`) and never writes to storage.
   final bool demoMode;
+
+  /// Injectable online controller for tests.
+  final GuildController? guild;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,7 @@ class DailiesApp extends StatelessWidget {
       title: 'Dailies — Level Up Daily',
       debugShowCheckedModeBanner: false,
       theme: buildTheme(),
-      home: HomeScreen(demoMode: demoMode),
+      home: HomeScreen(demoMode: demoMode, guild: guild),
     );
   }
 }

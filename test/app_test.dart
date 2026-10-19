@@ -188,6 +188,7 @@ void main() {
     await tester.pumpWidget(const DailiesApp(demoMode: true));
     await tester.pumpAndSettle();
 
+    await tester.scrollUntilVisible(find.byType(HabitTile).last, 200);
     await tester.tap(find.byType(HabitTile).last);
     await tester.pumpAndSettle();
 
