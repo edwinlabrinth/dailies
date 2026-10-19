@@ -7,6 +7,12 @@ updates:
     open-pull-requests-limit: 5
     commit-message:
       prefix: "chore"
+    ignore:
+      # shared_preferences 2.5.6 requires Dart ^3.11, but this project builds
+      # against the Dart 3.10 SDK (Flutter 3.38). Revisit when Flutter's stable
+      # channel moves past 3.38.
+      - dependency-name: "shared_preferences"
+        versions: [">=2.5.6"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
