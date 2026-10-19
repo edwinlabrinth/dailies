@@ -36,3 +36,17 @@ jobs:
         run: flutter pub get
       - name: Build web bundle
         run: flutter build web --release
+
+  windows-release-build:
+    name: Windows release build
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Build desktop bundle
+        run: flutter build windows --release
