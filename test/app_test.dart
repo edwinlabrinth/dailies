@@ -112,4 +112,28 @@ void main() {
 
     expect(find.text('Drink water'), findsOneWidget);
   });
+
+  testWidgets('demo mode seeds sample habits', (tester) async {
+    await tester.pumpWidget(const DailiesApp(demoMode: true));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Morning run'), findsOneWidget);
+    expect(find.text('110 XP'), findsOneWidget);
+    expect(find.text('3/5'), findsOneWidget);
+
+    // The last demo habit sits below the fold in the test viewport.
+    await tester.scrollUntilVisible(find.text('Ship something'), 200);
+    expect(find.text('Ship something'), findsOneWidget);
+  });
+
+  testWidgets('demo mode never writes to storage', (tester) async {
+    await tester.pumpWidget(const DailiesApp(demoMode: true));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byType(HabitTile).last);
+    await tester.pumpAndSettle();
+
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getString('dailies.habits.v1'), isNull);
+  });
 }

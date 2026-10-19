@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data/demo_habits.dart';
 import '../data/habit_store.dart';
 import '../models/habit.dart';
 import '../models/level.dart';
@@ -9,13 +10,21 @@ import '../widgets/level_card.dart';
 
 /// Main screen: level header, momentum stats, habit list.
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, this.store, this.clock});
+  const HomeScreen({
+    super.key,
+    this.store,
+    this.clock,
+    this.demoMode = false,
+  });
 
   /// Injectable for tests.
   final HabitStore? store;
 
   /// Injectable "now" for tests.
   final DateTime Function()? clock;
+
+  /// Seeds sample habits when storage is empty and skips all writes.
+  final bool demoMode;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -36,12 +45,21 @@ class _HomeScreenState extends State<HomeScreen> {
   DateTime _today() => (widget.clock ?? DateTime.now)();
 
   Future<void> _load() async {
-    final habits = await _store.load();
+    var habits = await _store.load();
+    if (habits.isEmpty && widget.demoMode) {
+      habits = demoHabits(today: _today());
+    }
     if (!mounted) return;
     setState(() {
       _habits = habits;
       _loading = false;
     });
+  }
+
+  /// Demo sessions are throwaway — they never touch storage.
+  void _persist() {
+    if (widget.demoMode) return;
+    _store.save(_habits);
   }
 
   void _toggle(Habit habit) {
@@ -54,14 +72,14 @@ class _HomeScreenState extends State<HomeScreen> {
               : h,
       ];
     });
-    _store.save(_habits);
+    _persist();
   }
 
   Future<void> _addHabit() async {
     final habit = await AddHabitDialog.show(context);
     if (habit == null) return;
     setState(() => _habits = [..._habits, habit]);
-    _store.save(_habits);
+    _persist();
   }
 
   Future<void> _delete(Habit habit) async {
@@ -89,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
     if (confirmed != true) return;
     setState(() => _habits = _habits.where((h) => h.id != habit.id).toList());
-    _store.save(_habits);
+    _persist();
   }
 
   @override
