@@ -171,10 +171,10 @@ Prebuilt APKs are attached to the
 
 | File | When to use it |
 |---|---|
-| `dailies-2.0.0-arm64-v8a.apk` | Almost every phone from recent years (~16 MB) |
-| `dailies-2.0.0-armeabi-v7a.apk` | Older 32-bit devices (~14 MB) |
-| `dailies-2.0.0-x86_64.apk` | Emulators and x86 tablets (~18 MB) |
-| `dailies-2.0.0.apk` | Universal build if you're not sure (~47 MB) |
+| `dailies-2.0.1-arm64-v8a.apk` | Almost every phone from recent years (~16 MB) |
+| `dailies-2.0.1-armeabi-v7a.apk` | Older 32-bit devices (~14 MB) |
+| `dailies-2.0.1-x86_64.apk` | Emulators and x86 tablets (~18 MB) |
+| `dailies-2.0.1.apk` | Universal build if you're not sure (~47 MB) |
 
 Or build it yourself:
 
