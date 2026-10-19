@@ -1,3 +1,10 @@
+# Local secrets and tooling
+.env
+.env.*
+!.env.example
+/node_modules/
+.netlify/
+
 # Miscellaneous
 *.class
 *.log
