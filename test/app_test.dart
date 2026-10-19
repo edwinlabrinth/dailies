@@ -21,7 +21,7 @@ void main() {
   });
 
   testWidgets('shows the empty state on a fresh install', (tester) async {
-    await tester.pumpWidget(const ProApp());
+    await tester.pumpWidget(const DailiesApp());
     await tester.pumpAndSettle();
 
     expect(find.text('No habits yet'), findsOneWidget);
@@ -30,7 +30,7 @@ void main() {
   });
 
   testWidgets('creates a habit from the dialog', (tester) async {
-    await tester.pumpWidget(const ProApp());
+    await tester.pumpWidget(const DailiesApp());
     await tester.pumpAndSettle();
 
     await addHabit(tester, 'Read 20 pages');
@@ -42,7 +42,7 @@ void main() {
 
   testWidgets('completing a habit earns XP and starts the streak',
       (tester) async {
-    await tester.pumpWidget(const ProApp());
+    await tester.pumpWidget(const DailiesApp());
     await tester.pumpAndSettle();
     await addHabit(tester, 'Meditate');
 
@@ -62,7 +62,7 @@ void main() {
   });
 
   testWidgets('habits survive a restart', (tester) async {
-    await tester.pumpWidget(const ProApp());
+    await tester.pumpWidget(const DailiesApp());
     await tester.pumpAndSettle();
     await addHabit(tester, 'Meditate');
     await tester.tap(find.byType(HabitTile).first);
@@ -70,7 +70,7 @@ void main() {
 
     // Tear the app down and boot it again from persistence.
     await tester.pumpWidget(const SizedBox.shrink());
-    await tester.pumpWidget(const ProApp());
+    await tester.pumpWidget(const DailiesApp());
     await tester.pumpAndSettle();
 
     expect(find.text('Meditate'), findsOneWidget);
@@ -78,7 +78,7 @@ void main() {
   });
 
   testWidgets('deletes a habit after long-press confirmation', (tester) async {
-    await tester.pumpWidget(const ProApp());
+    await tester.pumpWidget(const DailiesApp());
     await tester.pumpAndSettle();
     await addHabit(tester, 'Junk food');
 
@@ -107,7 +107,7 @@ void main() {
       ]),
     });
 
-    await tester.pumpWidget(const ProApp());
+    await tester.pumpWidget(const DailiesApp());
     await tester.pumpAndSettle();
 
     expect(find.text('Drink water'), findsOneWidget);

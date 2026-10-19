@@ -5,12 +5,12 @@ import 'theme.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const ProApp());
+  runApp(const DailiesApp());
 }
 
 /// The Dailies habit tracker app.
-class ProApp extends StatelessWidget {
-  const ProApp({super.key});
+class DailiesApp extends StatelessWidget {
+  const DailiesApp({super.key});
 
   @override
   Widget build(BuildContext context) {
