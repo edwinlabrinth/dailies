@@ -136,4 +136,27 @@ void main() {
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getString('dailies.habits.v1'), isNull);
   });
+
+  testWidgets('the week strip tracks the last seven days', (tester) async {
+    final handle = tester.ensureSemantics();
+    await tester.pumpWidget(const DailiesApp());
+    await tester.pumpAndSettle();
+    await addHabit(tester, 'Meditate');
+
+    expect(find.byKey(const ValueKey('week-dot-0')), findsOneWidget);
+    expect(find.byKey(const ValueKey('week-dot-6')), findsOneWidget);
+    expect(
+      find.bySemanticsLabel(RegExp('Last 7 days: 0 done')),
+      findsOneWidget,
+    );
+
+    await tester.tap(find.byType(HabitTile).first);
+    await tester.pumpAndSettle();
+
+    expect(
+      find.bySemanticsLabel(RegExp('Last 7 days: 1 done')),
+      findsOneWidget,
+    );
+    handle.dispose();
+  });
 }

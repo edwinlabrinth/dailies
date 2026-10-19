@@ -52,8 +52,14 @@ class Habit {
     return streak;
   }
 
-  Habit markDone(DateTime date) => copyWith(doneDates: {...doneDates, dateKey(date)});
+  /// Whether the habit was completed on each of the last seven days, oldest
+  /// first and ending with [today] — ready to render as a week strip.
+  List<bool> lastSevenDays(DateTime today) => [
+        for (var daysAgo = 6; daysAgo >= 0; daysAgo--)
+          isDoneOn(today.subtract(Duration(days: daysAgo))),
+      ];
 
+  Habit markDone(DateTime date) => copyWith(doneDates: {...doneDates, dateKey(date)});
   Habit markUndone(DateTime date) => copyWith(
       doneDates: {...doneDates}..remove(dateKey(date)));
 

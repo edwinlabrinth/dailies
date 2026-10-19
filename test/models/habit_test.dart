@@ -66,6 +66,26 @@ void main() {
     });
   });
 
+  group('lastSevenDays', () {
+    test('returns seven flags, oldest first, ending with today', () {
+      final habit = build(done: {dateKey(today), dateKey(twoDaysAgo)});
+
+      expect(habit.lastSevenDays(today), [
+        false, // 6 days ago
+        false, // 5 days ago
+        false, // 4 days ago
+        false, // 3 days ago
+        true, // 2 days ago
+        false, // yesterday
+        true, // today
+      ]);
+    });
+
+    test('is all false with no completions', () {
+      expect(build().lastSevenDays(today), everyElement(isFalse));
+    });
+  });
+
   group('JSON', () {
     test('roundtrips through toJson/fromJson', () {
       final original = Habit(
