@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: ▶️ Live demo
+    url: https://edwinlabrinth.github.io/dailies/?demo
+    about: Try the latest main branch in your browser before filing anything.
+  - name: 📖 README
+    url: https://github.com/edwinlabrinth/dailies#-getting-started
+    about: Setup instructions, game rules and design notes.

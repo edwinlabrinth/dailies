@@ -1,0 +1,59 @@
+name: 🐛 Bug report
+description: Something didn't work the way it should
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report! The more detail you
+        give, the faster this gets fixed.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you see, and what did you expect instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Tap "New habit"
+        2. Name it "Read 20 pages"
+        3. ...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Where does it happen?
+      options:
+        - Windows desktop
+        - Web (desktop browser)
+        - Web (mobile browser)
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: flutter-version
+    attributes:
+      label: Flutter version
+      description: The output of `flutter --version`
+      placeholder: "Flutter 3.38.6 • Dart 3.10.7"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before you file
+      options:
+        - label: I searched the existing issues first
+          required: true
+        - label: "`flutter analyze` and `flutter test` pass on my checkout"
+          required: false

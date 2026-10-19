@@ -1,0 +1,29 @@
+name: 💡 Feature request
+description: An idea that would make Dailies better
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe the itch, not the fix — the why helps more than the how.
+    validations:
+      required: true
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: How would you like it to work?
+      placeholder: "e.g. A weekly view that shows four weeks at once"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before you file
+      options:
+        - label: I checked the roadmap in the README (it might already be planned)
+          required: true
+        - label: I searched the existing issues first
+          required: true
