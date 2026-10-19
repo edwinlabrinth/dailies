@@ -64,6 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _toggle(Habit habit) {
     final today = _today();
+    final levelBefore = levelForXp(totalXp(_habits));
+
     setState(() {
       _habits = [
         for (final h in _habits)
@@ -73,6 +75,17 @@ class _HomeScreenState extends State<HomeScreen> {
       ];
     });
     _persist();
+
+    final xp = totalXp(_habits);
+    final levelAfter = levelForXp(xp);
+    if (levelAfter > levelBefore) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('🎉 Level $levelAfter! $xp XP and counting'),
+          duration: const Duration(seconds: 4),
+        ),
+      );
+    }
   }
 
   Future<void> _addHabit() async {
@@ -83,6 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _delete(Habit habit) async {
+    final messenger = ScaffoldMessenger.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -106,8 +120,25 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
     if (confirmed != true) return;
+    final index = _habits.indexWhere((h) => h.id == habit.id);
     setState(() => _habits = _habits.where((h) => h.id != habit.id).toList());
     _persist();
+
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text('Deleted "${habit.name}"'),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            setState(() {
+              _habits = [..._habits]
+                ..insert(index.clamp(0, _habits.length), habit);
+            });
+            _persist();
+          },
+        ),
+      ),
+    );
   }
 
   @override

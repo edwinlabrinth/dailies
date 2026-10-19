@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dailies/main.dart';
+import 'package:dailies/models/habit.dart';
 import 'package:dailies/widgets/habit_tile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -92,6 +93,63 @@ void main() {
 
     expect(find.byType(HabitTile), findsNothing);
     expect(find.text('No habits yet'), findsOneWidget);
+    expect(find.text('Undo'), findsOneWidget);
+
+    // Let the snackbar's timer run out so no pending timers outlive the test.
+    await tester.pump(const Duration(seconds: 5));
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('deleting a habit can be undone', (tester) async {
+    await tester.pumpWidget(const DailiesApp());
+    await tester.pumpAndSettle();
+    await addHabit(tester, 'Junk food');
+
+    await tester.longPress(find.byType(HabitTile).first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('confirm-delete')));
+    await tester.pumpAndSettle();
+    expect(find.byType(HabitTile), findsNothing);
+
+    await tester.tap(find.text('Undo'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Junk food'), findsOneWidget);
+    expect(find.byType(HabitTile), findsOneWidget);
+
+    await tester.pump(const Duration(seconds: 5));
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('crossing into a new level is celebrated', (tester) async {
+    final now = DateTime.now();
+    SharedPreferences.setMockInitialValues({
+      'dailies.habits.v1': jsonEncode([
+        {
+          'id': 'seeded',
+          'name': 'Almost there',
+          'icon': 0,
+          'color': 1,
+          'done': [
+            for (var i = 1; i <= 9; i++)
+              dateKey(now.subtract(Duration(days: i))),
+          ],
+        },
+      ]),
+    });
+
+    await tester.pumpWidget(const DailiesApp());
+    await tester.pumpAndSettle();
+    expect(find.text('90 XP'), findsOneWidget);
+
+    // One more completion tips 90 XP over the 100 XP needed for level 2.
+    await tester.tap(find.byType(HabitTile).first);
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('Level 2'), findsOneWidget);
+
+    await tester.pump(const Duration(seconds: 5));
+    await tester.pumpAndSettle();
   });
 
   testWidgets('loads previously saved habits on boot', (tester) async {
