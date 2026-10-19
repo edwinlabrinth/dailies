@@ -8,7 +8,7 @@ Add a daily · check it off · earn XP · keep the streak alive · fight the wee
 
 [![CI](https://github.com/edwinlabrinth/dailies/actions/workflows/ci.yml/badge.svg)](https://github.com/edwinlabrinth/dailies/actions/workflows/ci.yml)
 [![Flutter](https://img.shields.io/badge/Flutter-3.38-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
-[![Platforms](https://img.shields.io/badge/platforms-web%20%7C%20windows-6E56CF.svg)](#-getting-started)
+[![Platforms](https://img.shields.io/badge/platforms-web%20%7C%20windows%20%7C%20android-6E56CF.svg)](#-getting-started)
 [![Tests](https://img.shields.io/badge/tests-50%20passing-brightgreen.svg)](#-testing)
 [![Live](https://img.shields.io/badge/live-dailies--guild.netlify.app-00C7B7?logo=netlify&logoColor=white)](https://dailies-guild.netlify.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-3DA639.svg)](LICENSE)
@@ -48,7 +48,7 @@ The optional **Guild Hall** adds cloud backup, a weekly leaderboard, and a
 | 🔥 **Guild streak** | Consecutive days on which *somebody* in the guild showed up |
 | 🎨 **Material 3 dark UI** | Seeded palette, animated check-off, momentum stats |
 | 🧪 **Fully tested** | 50 unit + widget tests, plus 10 end-to-end API checks |
-| 🌐 **Web + Windows** | Same codebase, one `flutter run` away |
+| 🌐 **Web + Windows + Android** | Same codebase, one `flutter run` away |
 
 ## 📸 A look at it
 
@@ -159,9 +159,32 @@ flutter pub get
 
 flutter run -d windows   # desktop
 flutter run -d chrome    # web
+flutter run -d android   # phone or emulator
 ```
 
 The app works fully offline out of the box. The guild hall needs the API below.
+
+### 📱 Android APK
+
+Prebuilt APKs are attached to the
+[GitHub releases](https://github.com/edwinlabrinth/dailies/releases):
+
+| File | When to use it |
+|---|---|
+| `dailies-2.0.0-arm64-v8a.apk` | Almost every phone from recent years (~16 MB) |
+| `dailies-2.0.0-armeabi-v7a.apk` | Older 32-bit devices (~14 MB) |
+| `dailies-2.0.0-x86_64.apk` | Emulators and x86 tablets (~18 MB) |
+| `dailies-2.0.0.apk` | Universal build if you're not sure (~47 MB) |
+
+Or build it yourself:
+
+```bash
+flutter build apk --release                  # universal
+flutter build apk --release --split-per-abi  # one APK per architecture
+```
+
+The release APKs are signed with the debug key — fine for side-loading, but
+create your own keystore before publishing to a store.
 
 ### 🏰 Running the backend locally
 
@@ -229,6 +252,8 @@ netlify/functions/api.mjs        # the whole serverless API
 db/schema.sql                    # Neon Postgres schema
 scripts/db.mjs                   # applies the schema (npm run db)
 scripts/smoke.mjs                # 10 API checks (npm run smoke)
+android/                         # Android runner + generated launcher icons
+assets/icon/                     # source art for the launcher icon
 test/
 ├── app_test.dart                # end-to-end widget tests
 ├── data/                        # store round-trips, API client
@@ -286,6 +311,7 @@ build and a backend syntax check on every push — see
 
 - [x] Optional cloud sync + weekly guild leaderboard
 - [x] Weekly world boss with HP that scales with active players
+- [x] Android build with per-architecture APK releases
 - [ ] Boss modifiers (e.g. double damage on Wednesdays)
 - [ ] Rivalries: pin a friend and race their weekly XP
 - [ ] Monthly calendar view per habit
@@ -294,7 +320,7 @@ build and a backend syntax check on every push — see
 - [ ] Light theme and a theme picker
 - [ ] Streak freeze: bank one missed day per week
 - [ ] Export / import a JSON backup
-- [ ] Android & iOS targets
+- [ ] iOS target
 
 ## 🤝 Contributing
 

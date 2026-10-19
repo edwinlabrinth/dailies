@@ -50,3 +50,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Packaged release binaries (published as GitHub release assets instead)
+/dist/
