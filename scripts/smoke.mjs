@@ -8,19 +8,33 @@ import handler from '../netlify/functions/api.mjs';
  * End-to-end smoke test for the API, straight against the real database.
  * Creates one throwaway player and deletes it again in a finally block.
  *
- *   npm run smoke
+ *   npm run smoke                                   # the function, in-process
+ *   $env:API_BASE='https://…/api'; npm run smoke    # the deployed function
  */
 const sql = neon(process.env.DATABASE_URL);
+const liveBase = process.env.API_BASE?.replace(/\/+$/, '');
 
 async function call(method, route, { body, token } = {}) {
+  const headers = {
+    'content-type': 'application/json',
+    ...(token ? { authorization: `Bearer ${token}` } : {}),
+  };
+  const payload = body === undefined ? undefined : JSON.stringify(body);
+
+  if (liveBase) {
+    const response = await fetch(`${liveBase}/${route}`, {
+      method,
+      headers,
+      body: payload,
+    });
+    return { status: response.status, data: await response.json() };
+  }
+
   const response = await handler(
     new Request(`http://localhost/api/${route}`, {
       method,
-      headers: {
-        'content-type': 'application/json',
-        ...(token ? { authorization: `Bearer ${token}` } : {}),
-      },
-      body: body === undefined ? undefined : JSON.stringify(body),
+      headers,
+      body: payload,
     }),
   );
   const data = await response.json();

@@ -50,3 +50,20 @@ jobs:
         run: flutter pub get
       - name: Build desktop bundle
         run: flutter build windows --release
+
+  api-checks:
+    name: API checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install function dependencies
+        run: npm ci
+      - name: Syntax check the API and tooling
+        run: |
+          node --check netlify/functions/api.mjs
+          node --check scripts/db.mjs
+          node --check scripts/smoke.mjs
